@@ -1,7 +1,7 @@
 QUnit.test( 'trim()', function( assert ) {
   
   var  trim = function (text) {
-  	return (text || '').replace(/^\s+|\s+$/g, '');
+    return (text || '').replace(/^\s+|\s+$/g, '');
   }
 
   assert.ok(trim('') == '', 'Empty string');
@@ -18,29 +18,39 @@ QUnit.test( 'trim()', function( assert ) {
 
 QUnit.test( 'bytesToSize()', function( assert ) {
   
-	var bytesToSize = function (bytes) {
-	    var sizes = ['Bytes', 'KB', 'MB'];
-	    if (!bytes) return 0;	
-	    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-	    return (bytes / Math.pow(1024, i)).toFixed(1);
-	};
-	 assert.ok(bytesToSize() === 0 , 'Empty string');
-	 assert.ok(bytesToSize(1024) == 1.0 , '1 KB');
-	 assert.ok(bytesToSize(1024*1024) == 1.0 , '1 MB');
+  var bytesToSize = function (bytes) {
+      var sizes = ['Bytes', 'KB', 'MB'];
+      if (!bytes) return 0; 
+      var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+      return (bytes / Math.pow(1024, i)).toFixed(1);
+  };
+   assert.ok(bytesToSize() === 0 , 'Empty string');
+   assert.ok(bytesToSize(1024) == 1.0 , '1 KB');
+   assert.ok(bytesToSize(1024*1024) == 1.0 , '1 MB');
 
 });
 
 
 QUnit.test( 'rFilter()', function( assert ) {
   
-  	var rFilter = function(arg) {
-	    var rFilter = /^(image\/bmp|image\/gif|image\/jpeg|image\/png|image\/tiff)$/i;
-			return rFilter.test(arg);    
-  	}
+    var rFilter = function(arg) {
+      var rFilter = /^(image\/bmp|image\/gif|image\/jpeg|image\/png|image\/tiff)$/i;
+      return rFilter.test(arg);    
+    }
 
-	 assert.ok(rFilter('image/jpeg') , 'image/jpeg passed');
-	 assert.ok(!rFilter('application/pdf') , 'application/pdf passed');
+   assert.ok(rFilter('image/jpeg') , 'image/jpeg passed');
+   assert.ok(!rFilter('application/pdf') , 'application/pdf passed');
 
 });
 
+QUnit.test( 'asyn example', function( assert ) {
+  
+  var done = assert.async();
+  setTimeout(function() {
+    assert.ok(true, "test async" );
+    done();
+  },5000);   
+
+
+});
 
