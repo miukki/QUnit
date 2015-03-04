@@ -43,14 +43,76 @@ QUnit.test( 'rFilter()', function( assert ) {
 
 });
 
-QUnit.test( 'asyn example', function( assert ) {
+QUnit.test( 'async example', function( assert ) {
   
   var done = assert.async();
-  setTimeout(function() {
-    assert.ok(true, "test async" );
+  var myAsyncFunc = function (cb) {
+    setTimeout(function() {
+      assert.ok(true, "test async" );
+      cb();
+    },5000);   
+  };
+
+  myAsyncFunc(function(){
     done();
-  },5000);   
+  });
+
+});
+
+
+QUnit.test( 'async example with few async functions', function( assert ) {
+  
+  expect(2);
+  var done = assert.async();
+  
+  (function (cb) {
+    setTimeout(function() {
+      assert.ok(true, "test async 1" ); //expect1
+      cb();
+    },1000);   
+  })(function(){
+
+    setTimeout(function() {
+      assert.ok(true, "test async 2" );//expect2
+      done();
+    },1000);   
+
+  });
 
 
 });
+
+QUnit.test( 'test user actions, test tab-key ', function( assert ) {
+  
+
+  function KeyLogger( target ) {
+    if ( !(this instanceof KeyLogger) ) {
+      return new KeyLogger( target ); // this instanceof KeyLogger
+    }
+    this.target = target;
+    this.log = [];
+   
+    var self = this;
+   
+    this.target.off('keydown').on('keydown', function( event ) {
+      self.log.push( event.keyCode );
+    });
+  }
+
+  //testing:
+  var keys = KeyLogger($(document)); //this instanceof Window === true
+  var ev = $.Event( "keydown" ); 
+  ev.keyCode = 9;
+  $(document).trigger(ev);
+
+  assert.ok(keys.log.length && keys.log[0] === 9, "keyCode 9 success" );
+
+});
+
+QUnit.test( 'test DOM ', function( assert ) {
+  var el = $('#qunit-fixture');
+  el.append('<div></div>');
+  assert.ok($('div', el).length === 1, "success" );
+});
+
 

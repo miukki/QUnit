@@ -1,6 +1,6 @@
 # QUnit
-1. test.js - example how to use QUnit test.
-2. how to use modules - coming soon
-3. Async Callbacks
-
+1. How to test sync functions
+2. How to test Async functions
+3. Test user actions
+4. Test DOM
 
